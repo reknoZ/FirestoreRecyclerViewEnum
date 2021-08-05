@@ -33,8 +33,10 @@ class MainActivity : AppCompatActivity() {
 		db.collection("tournaments").addSnapshotListener { snapshot, error ->
 			if (error != null) { return@addSnapshotListener }
 
+			Log.i ("BEFORE", tournamentsList.size.toString())
 			tournamentsList = snapshot!!.toObjects(Tournament::class.java) as ArrayList<Tournament>
-
+			Log.i ("AFTER ", tournamentsList.size.toString())
+			
 			tournamentAdapter.notifyDataSetChanged()
 		}
 	}
@@ -47,12 +49,13 @@ class MainActivity : AppCompatActivity() {
 						Log.e ("Firestore error", error.message.toString())
 						return
 					}
-
+					Log.i ("BEFORE", tournamentsList.size.toString())
 					for (dc: DocumentChange in value?.documentChanges!!) {
 						if (dc.type == DocumentChange.Type.ADDED) {
 							tournamentsList.add(dc.document.toObject(Tournament::class.java))
 						}
 					}
+					Log.i ("AFTER ", tournamentsList.size.toString())
 					tournamentAdapter.notifyDataSetChanged()
 				}
 			})
