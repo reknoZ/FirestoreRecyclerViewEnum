@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	private fun EventChangeListener2() {
+		db = FirebaseFirestore.getInstance()
 		db.collection("tournaments")
 			.addSnapshotListener(object: EventListener<QuerySnapshot>{
 				override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
